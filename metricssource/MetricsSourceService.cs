@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -9,12 +10,14 @@ namespace metricssource
     class MetricsSourceService : IHostedService, IDisposable
     {
         private readonly IHostApplicationLifetime applicationLifetime;
+        private readonly Metrics metrics;
         readonly CancellationTokenSource stoppingCts = new();
         private Task? executingTask;
 
-        public MetricsSourceService(IHostApplicationLifetime applicationLifetime)
+        public MetricsSourceService(IHostApplicationLifetime applicationLifetime, Metrics metrics)
         {
             this.applicationLifetime = applicationLifetime;
+            this.metrics = metrics;
         }
 
         public void Dispose()
@@ -66,8 +69,11 @@ namespace metricssource
                 Console.WriteLine("Start");
                 while (!stoppingToken.IsCancellationRequested)
                 {
+                    Stopwatch sw = new();
+                    int delay = Random.Shared.Next(100,300);
                     Console.Write("*");
-                    await Task.Delay(1000, stoppingToken).ContinueWith(t => {},CancellationToken.None); // łyka exception
+                    await Task.Delay(delay, stoppingToken).ContinueWith(t => {},CancellationToken.None); // łyka exception
+                    metrics.RequestProcessed(sw.ElapsedMilliseconds);
                 }
 
                 applicationLifetime.StopApplication();

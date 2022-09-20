@@ -3,10 +3,11 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading.Tasks;
 
-namespace metricssource{
-class Program
+namespace metricssource
 {
-    static async Task Main(string[] args)
+    class Program
+    {
+        static async Task Main(string[] args)
         {
             await CreateHostBuilder(args).RunConsoleAsync();
         }
@@ -14,7 +15,11 @@ class Program
         private static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
-                .ConfigureServices((hostContext, services) => services.AddHostedService<MetricsSourceService>());
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services.AddHostedService<MetricsSourceService>();
+                    services.AddSingleton<Metrics>();
+                });
         }
-}
+    }
 }
