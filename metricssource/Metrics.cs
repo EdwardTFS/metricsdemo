@@ -7,8 +7,7 @@ namespace metricssource
     {
         public Metrics()
         {
-            var assemblyname = Assembly.GetExecutingAssembly().GetName();
-            this.meter  = new Meter(assemblyname.Name ?? string.Empty, assemblyname.Version?.ToString());
+            this.meter  = new Meter(Telemetry.ServiceName, Telemetry.Version);
             requestsProcessedCounter = meter.CreateCounter<int>("requests-processed");
             requestTimeHistogram = meter.CreateHistogram<long>("request-duration", unit: "ms");
         }
