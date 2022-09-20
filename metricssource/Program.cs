@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Threading.Tasks;
 
 namespace metricssource{
@@ -13,7 +14,7 @@ class Program
         private static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
-                       .ConfigureServices((hostContext, services) => services.AddHostedService<MetricsSourceService>());
+                .ConfigureServices((hostContext, services) => services.AddHostedService<MetricsSourceService>());
         }
 }
 }
