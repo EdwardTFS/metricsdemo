@@ -4,21 +4,25 @@ global:
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
   external_labels:
-    monitor: 'codelab-monitor'
+    monitor: 'tex-monitor'
 
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: "prometheus"
+  #- job_name: "prometheus"
 
     # metrics_path defaults to '/metrics'
     # scheme defaults to 'http'.
 
-    static_configs:
-      - targets: ["localhost:9090"]
+   # static_configs:
+    #  - targets: ["localhost:9090"]
 
-  - job_name: 'OpenTelemetryTest'
-    scrape_interval: 1s # poll very quickly for a more responsive demo
+  - job_name: 'tex-uapi'
+    scrape_interval: 5s # poll very quickly for a more responsive demo
     static_configs:
-      - targets: ['10.0.0.110:9184']
+      - targets: ['10.220.21.45:8119']
+  - job_name: 'tex-events'
+    scrape_interval: 5s # poll very quickly for a more responsive demo
+    static_configs:
+      - targets: ['10.220.21.45:8120']
