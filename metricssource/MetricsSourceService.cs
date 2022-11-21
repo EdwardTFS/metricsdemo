@@ -67,6 +67,7 @@ namespace metricssource
             try
             {
                 Console.WriteLine("Start");
+                _ = Task.Delay(30000,stoppingToken).ContinueWith(t=> UseUnused(),stoppingToken);
                 while (!stoppingToken.IsCancellationRequested)
                 {
                     Stopwatch sw = new();
@@ -84,6 +85,12 @@ namespace metricssource
             {
                 Console.WriteLine(exc.Message);
             }
+
+        }
+
+        private void UseUnused(){
+            Console.WriteLine("Using unused");
+            metrics.UseUnused();
 
         }
     }

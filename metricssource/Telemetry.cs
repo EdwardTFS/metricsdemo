@@ -20,7 +20,7 @@ namespace metricssource
                     .AddPrometheusExporter(opt =>
                     {
                         opt.StartHttpListener = true;
-                        opt.HttpListenerPrefixes = new string[] { $"http://10.0.0.110:9184/" };
+                        opt.HttpListenerPrefixes = new string[] { $"http://localhost:9184/" };
                     })
                     .Build();
                     return meterProvider;
